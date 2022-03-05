@@ -32,9 +32,12 @@
   (package
    (inherit emacs-next-pgtk)
    (name "emacs-local")
-   (version "latest")
-   (source (local-file (string-append (getenv "HOME") "/.emacs.d/src") "emacs-local-checkout"
-		       #:recursive? #t))
+   (version "2")
+   (source (local-file (string-append (getenv "HOME") "/.emacs.d/src")
+		       "emacs-local-checkout"
+		       #:recursive? #t
+		       #:select? (lambda (file _) (not (any (cute string-suffix? <> (basename file))
+							    ".git" ".elc" "loaddefs.el" "esh-groups\\.el")))))
    (arguments
     (substitute-keyword-arguments
      (package-arguments emacs-next-pgtk)
