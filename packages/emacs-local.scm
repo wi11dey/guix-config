@@ -13,7 +13,7 @@
    (inherit emacs-next-pgtk)
    (name "emacs-local")
    (version "latest")
-   (source (local-file "~/.emacs.d/src" "emacs-local-checkout"
+   (source (local-file (string-append (getenv "HOME") "/.emacs.d/src") "emacs-local-checkout"
 		       #:recursive? #t))
    (arguments
     (substitute-keyword-arguments
