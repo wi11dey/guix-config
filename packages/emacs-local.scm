@@ -8,6 +8,27 @@
   #:use-module (guix git)
   #:use-module (guix utils))
 
+(define libgccjit-11
+  (package
+   (inherit libgccjit)
+   (version (package-version gcc-11))
+   (source  (package-source  gcc-11))
+   (arguments
+    (substitute-keyword-arguments
+     (package-arguments libgccjit)
+     ((#:configure-flags flags)
+      `(cons* "--disable-bootstrap"
+	      "--disable-libatomic"
+	      "--disable-libgomp"
+	      "--disable-libquadmath"
+	      "--disable-libssp"
+	      "--enable-checking=release"
+	      ,flags))))
+   (inputs (modify-inputs (package-inputs libgccjit)
+			  (delete "libstdc++")))
+   (native-inputs (modify-inputs (package-native-inputs libgccjit)
+				 (prepend gcc-11)))))
+
 (define-public emacs-local
   (package
    (inherit emacs-next-pgtk)
@@ -53,25 +74,7 @@
 				 (prepend gcc-11)))
    (inputs (modify-inputs (package-inputs emacs-next-pgtk)
 			  (prepend glibc)
-			  (prepend (package
-				    (inherit libgccjit)
-				    (version (package-version gcc-11))
-				    (source  (package-source  gcc-11))
-				    (arguments
-				     (substitute-keyword-arguments
-				      (package-arguments libgccjit)
-				      ((#:configure-flags flags)
-				       `(cons* "--disable-bootstrap"
-					       "--disable-libatomic"
-					       "--disable-libgomp"
-					       "--disable-libquadmath"
-					       "--disable-libssp"
-					       "--enable-checking=release"
-					       ,flags))))
-				    (inputs (modify-inputs (package-inputs libgccjit)
-							   (delete "libstdc++")))
-				    (native-inputs (modify-inputs (package-native-inputs libgccjit)
-								  (prepend gcc-11)))))
+			  (prepend libgccjit-11)
 			  (prepend libxcomposite)))))
 
 emacs-local
