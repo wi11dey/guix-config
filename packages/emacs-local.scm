@@ -5,7 +5,6 @@
   #:use-module (gnu packages xorg)
   #:use-module (guix packages)
   #:use-module (guix gexp)  
-  #:use-module (guix git)
   #:use-module (guix utils))
 
 (define libgccjit-11
