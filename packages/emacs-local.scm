@@ -5,7 +5,9 @@
   #:use-module (gnu packages xorg)
   #:use-module (guix packages)
   #:use-module (guix gexp)  
-  #:use-module (guix utils))
+  #:use-module (guix utils)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26))
 
 (define libgccjit-11
   (package
@@ -32,12 +34,12 @@
   (package
    (inherit emacs-next-pgtk)
    (name "emacs-local")
-   (version "2")
+   (version "latest")
    (source (local-file (string-append (getenv "HOME") "/.emacs.d/src")
 		       "emacs-local-checkout"
 		       #:recursive? #t
 		       #:select? (lambda (file _) (not (any (cute string-suffix? <> (basename file))
-							    ".git" ".elc" "loaddefs.el" "esh-groups\\.el")))))
+							    '(".git" ".elc" "loaddefs.el" "esh-groups\\.el"))))))
    (arguments
     (substitute-keyword-arguments
      (package-arguments emacs-next-pgtk)
