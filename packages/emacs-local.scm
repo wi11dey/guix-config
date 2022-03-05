@@ -25,14 +25,15 @@
      ((#:phases phases)
       `(modify-phases
 	,phases
-	;; Add build-time library paths for libgccjit:
+	;; This section Copyright © 2020 Andrew Whatson <whatson@gmail.com> as it is based off of Andrew Whatson's GPLv3 Guix Channel here: https://github.com/flatwhatson/guix-channel.git
+	;; Add build-time library paths for libgccjit.
 	(add-before 'configure 'set-libgccjit-path
 		    (lambda* (#:key inputs #:allow-other-keys)
 			     (let ((libgccjit-libdir (string-append (assoc-ref inputs "libgccjit")
 								    "/lib/gcc/" %host-type "/"
 								    ,(package-version gcc-11) "/")))
 			       (setenv "LIBRARY_PATH" (string-append libgccjit-libdir ":" (getenv "LIBRARY_PATH"))))))
-	;; Add runtime library paths for libgccjit:
+	;; Add runtime library paths for libgccjit.
 	(add-after 'unpack 'patch-driver-options
 		   (lambda* (#:key inputs #:allow-other-keys)
 			    (substitute* "lisp/emacs-lisp/comp.el"
