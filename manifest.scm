@@ -1,6 +1,4 @@
-(add-to-load-path ".")
-(use-modules (packages emacs-local)
-	     (gnu package))
+(use-modules (gnu packages emacs))
 
 (concatenate-manifests
  (specifications->manifest
@@ -20,6 +18,7 @@
     "texlive" ; TODO texlive-optex only
     "unzip"))
  (packages->manifest
-  (list (if (access? (local-file-absolute-file-name (package-source emacs-local)) R_OK)
-	    emacs-local
-	    emacs-next))))
+  (list (let ((custom-emacs-package (string-append (getenv "HOME") "/.emacs.d/emacs.scm")))
+	  (if (access? custom-emacs-package R_OK)
+	      (load custom-emacs-package)
+	      emacs-next)))))
