@@ -1,3 +1,5 @@
+;; TODO contribute upstream
+
 (define-module (services startx)
   #:use-module (guix gexp)
   #:use-module (guix packages)
@@ -31,6 +33,7 @@
 (define startx-service-type
   (service-type
    (name 'startx)
+   (description "startx command")
    (extensions (list (service-extension profile-service-type
 					(lambda (config)
 					  (list xinit-etc
