@@ -51,8 +51,8 @@
  (swap-devices (list (swap-space
 		      (target (file-system-label "swap")))))
  (users (cons* (user-account
-		(name "wi11dey")
-		(comment "Owner")
+		(name "user")
+		(comment "User")
 		(group "users")
 		;; Adding the account to the "wheel" group
 		;; makes it a sudoer.  Adding it to "audio"
