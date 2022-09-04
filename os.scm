@@ -1,4 +1,4 @@
-(add-to-load-path ".") ; TODO Submit patch to restore (current-filename) behavior.
+(add-to-load-path (dirname (current-filename)))
 (use-modules (services startx)
 	     (gnu)
 	     (gnu system)
@@ -23,7 +23,7 @@
 (operating-system
  (host-name "guix")
  (timezone (let ((current (call-with-port (open-input-file "/etc/timezone")
-					  (lambda (tz) (get-line tz))))
+			    (lambda (tz) (get-line tz))))
 		 (stdout (standard-output-port))) ; In case (current-output-port) has been set to something different.
 	     (put-string stdout (string-append "Timezone"
 					       (if (string-null? current)
