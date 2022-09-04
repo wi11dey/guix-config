@@ -84,7 +84,19 @@
 				       ((#:configure-flags flags)
 					`(cons* "--disable-systemd-logind" ,flags))))))
 			    (server-arguments '("-nolisten" "tcp"
-						"-noreset"))))
+						"-noreset"))
+			    (extra-config (list "
+Section \"InputClass\"
+  Identifier \"touchpad\"
+  Driver \"Synaptics\"
+  MatchIsTouchpad \"on\"
+  Option \"HorizTwoFingerScroll\" \"on\"
+  Option \"VertScrollDelta\" \"-75\"
+  Option \"HorizScrollDelta\" \"-35\"
+  Option \"RightButtonAreaLeft\" \"0\"
+  Option \"RightButtonAreaTop\" \"0\"
+EndSection
+"))))
 		  ;; (udev-rules-service 'android android-udev-rules
                   ;;                     #:groups '("adbusers"))
 		  (modify-services %base-services
