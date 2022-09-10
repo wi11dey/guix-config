@@ -41,8 +41,7 @@
 	      (bootloader grub-bootloader)
 	      (targets '("/dev/sda"))
 	      (keyboard-layout keyboard-layout)))
- (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
-		     "quiet"))
+ (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
  (file-systems (cons* (file-system
 		       (device (file-system-label "guix"))
 		       (mount-point "/")
