@@ -96,6 +96,9 @@ Section \"InputClass\"
   Option \"RightButtonAreaTop\" \"0\"
 EndSection
 "))))
+		  ;; TODO: Upstream patch https://gist.github.com/hadess/6968197 https://systemd-devel.freedesktop.narkive.com/eYv62kRQ/patch-add-support-for-intel-rapid-start to add support for Intel Rapid Start to elogind:
+		  (elogind-service) ; TODO: No dbus.
+		  ;; TODO: Allow anyone to change backlight brightness.
 		  ;; (udev-rules-service 'android android-udev-rules
                   ;;                     #:groups '("adbusers"))
 		  (modify-services %base-services
