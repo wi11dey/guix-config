@@ -42,7 +42,8 @@
 	      (targets '("/dev/sda"))
 	      (keyboard-layout keyboard-layout)))
  (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
-		     "mem_sleep_default=deep"))
+		     "mem_sleep_default=deep",
+		     "quiet"))
  (file-systems (cons* (file-system
 		       (device (file-system-label "guix"))
 		       (mount-point "/")
