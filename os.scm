@@ -41,7 +41,8 @@
 	      (bootloader grub-bootloader)
 	      (targets '("/dev/sda"))
 	      (keyboard-layout keyboard-layout)))
- (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
+ (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
+		     "mem_sleep_default=deep"))
  (file-systems (cons* (file-system
 		       (device (file-system-label "guix"))
 		       (mount-point "/")
@@ -96,8 +97,8 @@ Section \"InputClass\"
   Option \"RightButtonAreaTop\" \"0\"
 EndSection
 "))))
-		  ;; TODO: Upstream patch https://gist.github.com/hadess/6968197 https://systemd-devel.freedesktop.narkive.com/eYv62kRQ/patch-add-support-for-intel-rapid-start to add support for Intel Rapid Start to elogind:
-		  (elogind-service) ; TODO: No dbus.
+		  (simple-service 'sysfs-permissions activation-service-type
+				  #~(chmod "/sys/power/state" #o666))
 		  ;; TODO: Allow anyone to change backlight brightness.
 		  ;; (udev-rules-service 'android android-udev-rules
                   ;;                     #:groups '("adbusers"))
