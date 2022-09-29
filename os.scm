@@ -73,6 +73,10 @@
   (cons* (setuid-program
 	  (program (file-append udevil "/bin/udevil")))
 	 %setuid-programs))
+ (sudoers-file (plain-file "sudoers" "\
+root ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
+ALL ALL=(ALL) NOPASSWD: /run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/shutdown,/run/current-system/profile/sbin/reboot\n"))
  (services (cons* (service startx-service-type
 			   (xorg-configuration
 			    (keyboard-layout keyboard-layout)
