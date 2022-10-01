@@ -62,10 +62,16 @@
 		(supplementary-groups '("wheel"
 					"netdev"
 					"audio"
+					"power"
+					"backlight"
 					"video"
 					;; "adbusers"
 					"input")))
 	       %base-user-accounts))
+ (groups (cons* (user-group
+		 (name "power")
+		 (system? #t))
+		%base-groups))
  (packages (cons* wpa-supplicant-minimal
 		  nss-certs
 		  %base-packages))
@@ -76,7 +82,7 @@
  (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
-ALL ALL=(ALL) NOPASSWD: /run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/shutdown,/run/current-system/profile/sbin/reboot\n"))
+%power ALL=(ALL) NOPASSWD: /run/current-system/profile/sbin/halt,/run/current-system/profile/sbin/shutdown,/run/current-system/profile/sbin/reboot\n"))
  (services (cons* (service startx-service-type
 			   (xorg-configuration
 			    (keyboard-layout keyboard-layout)
@@ -102,8 +108,18 @@ Section \"InputClass\"
   Option \"RightButtonAreaTop\" \"0\"
 EndSection
 "))))
-		  (simple-service 'sysfs-permissions activation-service-type
-				  #~(chmod "/sys/power/state" #o666))
+		  (simple-service 'suspend-permission activation-service-type
+				  #~(begin
+				      (chown "/sys/power/state" 0 (group:gid (getgrnam "power")))
+				      (chmod "/sys/power/state" #o664)))
+		  (udev-rules-service 'backlight-permission
+				      (file->udev-rule "backlight.rules"
+						       (mixed-text-file "backlight.rules"
+									"ACTION==\"add\","
+									"SUBSYSTEM==\"backlight\","
+									"RUN+=\"" coreutils "/bin/chgrp backlight $sys$devpath/brightness\","
+									"RUN+=\"" coreutils "/bin/chmod g+w       $sys$devpath/brightness\""))
+				      #:groups '("backlight"))
 		  ;; TODO: Allow anyone to change backlight brightness.
 		  ;; (udev-rules-service 'android android-udev-rules
                   ;;                     #:groups '("adbusers"))
