@@ -481,7 +481,7 @@ using Dates: @dateformat_str, Date, DateTime, DateFormat, Time"))
 										  (basename file)))))
 						 (find-files (string-append (assoc-ref inputs pkgname)
 									    "/lib") pred)))))
-				    (link "llvm" "libLLVM-11jl\\.so")
+				    (link "llvm" "libLLVM-13jl\\.so")
 				    (link "utf8proc" "libutf8proc\\.so"))))
 		     (add-after 'install 'make-wrapper
 				(lambda* (#:key inputs outputs #:allow-other-keys)
