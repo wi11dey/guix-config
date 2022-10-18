@@ -128,8 +128,4 @@ EndSection
 				    config => (map (lambda (tty+font)
 						     (cons (car tty+font)
 							   "Lat2-Terminus16"))
-						   config))
-				   (guix-service-type
-				    config => (guix-configuration
-					       (inherit config)
-					       (tmpdir "/dev/shm")))))))
+						   config))))))
