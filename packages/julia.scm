@@ -5,6 +5,8 @@
   #:use-module (guix utils)
   #:use-module (guix git-download)
   #:use-module (guix build-system gnu)
+  #:use-module (guix gexp)
+  #:use-module (gnu packages ruby)
   #:use-module (gnu packages)
   #:use-module (gnu packages algebra)
   #:use-module (gnu packages base)
@@ -154,7 +156,7 @@ These BLAS libraries are known to work with libblastrampoline (successfully test
   (let ((commit "e6f0e4900e195c8352f821abe2b3cffc3089547b")
         (revision "4"))
     ;; When upgrading Julia, also upgrade this.  Get the commit from
-    ;; https://github.com/JuliaLang/julia/blob/v1.6.1/deps/libuv.version
+    ;; https://github.com/JuliaLang/julia/blob/v1.8.2/deps/libuv.version
     (package
      (inherit libuv)
      (name "libuv-julia")
@@ -518,7 +520,7 @@ using Dates: @dateformat_str, Date, DateTime, DateFormat, Time"))
        "CONFIG_SHELL=bash -x"     ; needed to build bundled libraries
        "USE_BINARYBUILDER=0"
        ;; list (and order!) of "USE_SYSTEM_*" is here:
-       ;; https://github.com/JuliaLang/julia/blob/v1.6.0/Make.inc
+       ;; https://github.com/JuliaLang/julia/blob/v1.8.2/Make.inc
        "USE_SYSTEM_LIBWHICH=1"
        "USE_SYSTEM_LIBBLASTRAMPOLINE=1"
        "USE_SYSTEM_CSL=1"
@@ -586,12 +588,12 @@ using Dates: @dateformat_str, Date, DateTime, DateFormat, Time"))
       ("p7zip" ,p7zip)
       ("pcre2" ,pcre2)
       ("suitesparse" ,suitesparse)
-      ("utf8proc" ,utf8proc-2.6.1)
+      ("utf8proc" ,utf8proc-2.7.0)
       ("wget" ,wget)
       ("which" ,which)
       ("zlib" ,zlib)
       ;; Find dependencies versions here:
-      ;; https://raw.githubusercontent.com/JuliaLang/julia/v1.6.0/deps/Versions.make
+      ;; https://raw.githubusercontent.com/JuliaLang/julia/v1.8.2/deps/*.version
       ("dsfmt" ,dsfmt)
       ("libwhich" ,libwhich)))
    (native-inputs
