@@ -428,6 +428,15 @@ using Dates: @dateformat_str, Date, DateTime, DateFormat, Time"))
 				   (substitute* "stdlib/MozillaCACerts_jll/test/runtests.jl"
 						(("@test isfile\\(MozillaCACerts_jll.cacert\\)")
 						 "@test_broken isfile(MozillaCACerts_jll.cacert)"))
+				   ;; This tests for the the OpenBLAS 0.3.13 ex-shift patch working. Depending on OpenBLAS version used as input, this test may or may not pass, and it should really be in the openblas package.
+				   (substitute* "stdlib/LinearAlgebra/test/schur.jl"
+						;; @test_broken cannot be used because an error should not be raised if OpenBLAS is upgraded and the ex-shift patch starts working.
+						(("@testset \"Generalized Schur convergence\" begin.*\nend")
+						 " "))
+				   ;; LU factorization test uses the wrong integer type for USE_BLAS64=0; patch submitted upstream at https://github.com/JuliaLang/julia/TODO
+				   (substitute* "stdlib/LinearAlgebra/test/lu.jl"
+						(("\\$Int")
+						 "$BlasInt"))
 				   ;; since certificate is not present some tests are failing in network option
 				   (substitute* "usr/share/julia/stdlib/v1.8/NetworkOptions/test/runtests.jl"
 						(("@test isfile\\(bundled_ca_roots\\(\\)\\)")
