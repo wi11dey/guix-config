@@ -25,4 +25,4 @@
 				  (find-files (string-append (assoc-ref inputs pkgname)
 							     "/lib") pred)))))
 		     (link "suitesparse" "libklu\\.so"))))))
-   ((#:tests? _ #t) #f))))
+   ((#:tests? _) #f))))
