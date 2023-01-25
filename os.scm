@@ -124,6 +124,12 @@ EndSection
 		  ;; (udev-rules-service 'android android-udev-rules
                   ;;                     #:groups '("adbusers"))
 		  (modify-services %base-services
+				   (mingetty-service-type
+				    config => (mingetty-configuration
+					       (inherit config)
+					       (auto-login "user")
+					       (login-pause? (not (string=? (mingetty-configuration-tty config)
+									    "tty1")))))
 				   (console-font-service-type
 				    config => (map (lambda (tty+font)
 						     (cons (car tty+font)
