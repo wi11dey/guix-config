@@ -121,7 +121,6 @@ EndSection
 									"RUN+=\"" coreutils "/bin/chgrp backlight $sys$devpath/brightness\","
 									"RUN+=\"" coreutils "/bin/chmod g+w       $sys$devpath/brightness\""))
 				      #:groups '("backlight"))
-		  ;; TODO: Allow anyone to change backlight brightness.
 		  ;; (udev-rules-service 'android android-udev-rules
                   ;;                     #:groups '("adbusers"))
 		  (modify-services %base-services
