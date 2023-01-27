@@ -1,3 +1,16 @@
+(define-module (services wpa-dhcp)
+  #:use-module (gnu services)
+  #:use-module (gnu packages wpa-supplicant)
+  #:use-module (gnu packages networking)
+  #:use-module (guix records)
+  #:use-module (guix gexp)
+  #:export (wpa-dhcp-configuration
+	    wpa-dhcp-configuration?
+	    wpa-dhcp-configuration-wpa-supplicant
+	    wpa-dhcp-configuration-dhcp
+
+	    wpa-dhcp-service))
+
 (define-record-type* <wpa-dhcp-configuration>
   wpa-dhcp-configuration make-wpa-dhcp-configuration
   wpa-dhcp-configuration?
@@ -8,7 +21,7 @@
 
 (define (wpa-dhcp-service config)
   (shepherd-service
-   (documentation "Renew DHCP on wpa_supplicant connection.")
+   (documentation "Automatically renew DHCP when wpa_supplicant connects.")
    (provision '(wpa-dhcp))
    (requirement '(networking wpa-supplicant))
    (start #~(make-forkexec-constructor
