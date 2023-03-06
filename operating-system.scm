@@ -25,6 +25,9 @@
 (define %operating-system
   (operating-system
    (host-name "guix")
+   (issue (string-append %default-issue
+			 "\x1b[?5h" ; DECSCNM: Set console reverse-video mode on, see console_codes(4).
+			 ))
    ;; TODO Parse options from (file-append tzdata "/share/zoneinfo/zone.tab") using zonetab->timezones from (gnu installer timezone):
    (timezone (let ((current (call-with-port (open-input-file "/etc/timezone")
 			      (lambda (tz) (get-line tz))))
