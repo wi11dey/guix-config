@@ -26,6 +26,8 @@
   (operating-system
    (host-name "guix")
    (issue (string-append %default-issue
+			 "\x1b[9;1]" ; 1 minute screen timeout.
+			 ;; Solarized light:
 			 "\x1b]PB839496" ; S_base00
 			 "\x1b]PA93a1a1" ; S_base01
 			 "\x1b]P0eee8d5" ; S_base02
