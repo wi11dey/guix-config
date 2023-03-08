@@ -26,7 +26,22 @@
   (operating-system
    (host-name "guix")
    (issue (string-append %default-issue
-			 "\x1b[?5h" ; DECSCNM: Set console reverse-video mode on, see console_codes(4).
+			 "\x1b]PB839496" ; S_base00
+			 "\x1b]PA93a1a1" ; S_base01
+			 "\x1b]P0eee8d5" ; S_base02
+			 "\x1b]P62aa198" ; S_cyan
+			 "\x1b]P8fdf6e3" ; S_base03
+			 "\x1b]P2859900" ; S_green
+			 "\x1b]P5d33682" ; S_magenta
+			 "\x1b]P1dc322f" ; S_red
+			 "\x1b]PC657b83" ; S_base0
+			 "\x1b]PE586e75" ; S_base1
+			 "\x1b]P9cb4b16" ; S_orange
+			 "\x1b]P7073642" ; S_base2
+			 "\x1b]P4268bd2" ; S_blue
+			 "\x1b]P3b58900" ; S_yellow
+			 "\x1b]PF002b36" ; S_base3
+			 "\x1b]PD6c71c4" ; S_violet
 			 ))
    ;; TODO Parse options from (file-append tzdata "/share/zoneinfo/zone.tab") using zonetab->timezones from (gnu installer timezone):
    (timezone (let ((current (call-with-port (open-input-file "/etc/timezone")
