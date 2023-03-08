@@ -45,7 +45,7 @@
 	   "\x1b]PF002b36" ; S_base3
 	   "\x1b]PD6c71c4" ; S_violet
 	   "\x1bc" ; Reset console.
-	   %default-issue))
+	   ))
    ;; TODO Parse options from (file-append tzdata "/share/zoneinfo/zone.tab") using zonetab->timezones from (gnu installer timezone):
    (timezone (let ((current (call-with-port (open-input-file "/etc/timezone")
 			      (lambda (tz) (get-line tz))))
