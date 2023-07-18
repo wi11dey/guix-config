@@ -12,7 +12,6 @@
    "font-google-noto"
    "git"
    "icecat" ; TODO remove
-   "nyxt"
    "parted"
    "perl" ; Magit expects Perl to be installed for some operations.
    "scrot"
