@@ -10,6 +10,7 @@
    "flatpak"
    "font-dejavu"
    "font-google-noto"
+   "font-google-noto-sans-cjk"
    "git"
    "icecat" ; TODO remove
    "parted"
