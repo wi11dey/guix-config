@@ -37,6 +37,7 @@
       (list
        #:phases
        #~(modify-phases %standard-phases
+			;; Steps from https://tex.stackexchange.com/a/201798:
 			(add-before 'install 'ttfautohint
 				    (lambda _
 				      (for-each (lambda (otf)
