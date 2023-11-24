@@ -1,6 +1,7 @@
-(use-modules (gnu packages fonts)
-	     (gnu packages fontutils)
-	     (guix packages))
+(use-modules (gnu packages emacs)
+             (gnu packages fonts)
+             (gnu packages fontutils)
+             (guix packages))
 
 (concatenate-manifests
  (list
@@ -11,7 +12,6 @@
      "dosfstools" ; Contains mkfs.fat.
      "emacs-auctex"
      ;; "emacs-djvu3"
-     "emacs-next"
      "emacs-pdf-tools"
      "flatpak"
      "font-dejavu"
@@ -26,6 +26,7 @@
      "unzip"))
   (packages->manifest
    (list
+    (emacs->emacs-next emacs-xwidgets)
     (package
       (inherit font-latin-modern)
       (name (string-append (package-name font-latin-modern) "-ttf"))
