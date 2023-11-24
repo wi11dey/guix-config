@@ -37,24 +37,18 @@
       (list
        #:phases
        #~(modify-phases %standard-phases
-			(add-before 'install 'convert-to-ttf
-				    (lambda _
-				      (for-each (lambda (otf)
-						  (invoke #+(file-append fontforge "/bin/fontforge")
-							  "-lang=ff"
-							  "-c" "Open($1); Generate($1:r + \"-unhinted.ttf\")"
-							  otf)
-						  (delete-file otf))
-						(find-files "." "\\.otf$"))))
 			(add-before 'install 'ttfautohint
 				    (lambda _
-				      (for-each (lambda (unhinted-ttf)
-						  (invoke #+(file-append ttfautohint "/bin/ttfautohint")
-							  unhinted-ttf
-							  (string-append
-							   (substring unhinted-ttf
-								      0 (- (string-length unhinted-ttf)
-									   (string-length "-unhinted.ttf")))
-							   ".ttf"))
-						  (delete-file unhinted-ttf))
-						(find-files "." "\\-unhinted.ttf$"))))))))))))
+				      (for-each (lambda (otf)
+						  (let* ((base (string-drop-right otf (string-length ".otf")))
+							 (unhinted (string-append base "-unhinted.ttf"))
+							 (ttf (string-append base ".ttf")))
+						    (invoke #+(file-append fontforge "/bin/fontforge")
+							    "-lang=ff"
+							    "-c" "Open($1); Generate($2)"
+							    otf unhinted)
+						    (delete-file otf)
+						    (invoke #+(file-append ttfautohint "/bin/ttfautohint")
+							    unhinted ttf)
+						    (delete-file unhinted)))
+						(find-files "." "\\.otf$"))))))))))))
