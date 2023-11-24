@@ -65,8 +65,7 @@
    (bootloader (bootloader-configuration
 		(bootloader grub-bootloader)
 		(targets '("/dev/sda"))
-		(keyboard-layout keyboard-layout)
-		(timeout 0)))
+		(keyboard-layout keyboard-layout)))
    (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
 		       "mem_sleep_default=deep"
 		       "quiet"))
