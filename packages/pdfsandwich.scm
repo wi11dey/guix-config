@@ -1,12 +1,12 @@
 (define-module (packages pdfsandwich)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (guix svn-download)
-  #:use-module (guix git-download)
-  #:use-module (guix packages)
+  #:use-module (gnu packages sphinx)
+  #:use-module (gnu packages video)
   #:use-module (guix build-system meson)
   #:use-module (guix build-system ocaml)
-  #:use-module (gnu packages video)
-  #:use-module (gnu packages sphinx))
+  #:use-module (guix git-download)
+  #:use-module (guix svn-download)
+  #:use-module (guix packages))
 
 (define-public unpaper
   (package
