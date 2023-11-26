@@ -67,17 +67,17 @@
      (list
       #:tests? #f ; No tests included.
       #:configure-flags #~(list (string-append "--prefix=" #$output))
+      #:modules '((guix build ocaml-build-system)
+                  (guix build utils)
+		  (srfi srfi-26))
       #:phases
       #~(modify-phases %standard-phases
 	  (add-after 'install 'wrap-program
 	    (lambda _
 	      (wrap-program (string-append #$output "/bin/pdfsandwich")
 		`("PATH" ":" prefix
-		  ,(map (lambda (input) (string-append input "/bin"))
-			'(#$ghostscript
-			  #$imagemagick
-			  #$poppler
-			  #$tesseract-ocr
-			  #$unpaper)))))))))))
+		  ,(map (compose (cut string-append <> "/bin")
+				 cadr)
+			'#$(package-inputs this-package)))))))))))
 
 pdfsandwich
