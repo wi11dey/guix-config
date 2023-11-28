@@ -10,10 +10,9 @@
     (inherit otf-font)
     (name (string-append (package-name otf-font) "-ttf"))
     (native-inputs
-     (cons*
-      fontforge
-      ttfautohint
-      (package-native-inputs otf-font)))
+     (cons* fontforge
+            ttfautohint
+            (package-native-inputs otf-font)))
     (arguments
      (substitute-keyword-arguments (package-arguments otf-font)
        ((#:phases phases)
