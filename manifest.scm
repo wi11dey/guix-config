@@ -72,14 +72,14 @@
         (list
          #:phases
          #~(modify-phases %standard-phases
-             (add-after 'link-scripts 'font
+             (add-after 'link-scripts 'move-fonts
                (lambda _
                  (copy-recursively
                   (string-append #$output:out "/share/texmf-dist/fonts/opentype/public/newcomputermodern")
                   (string-append #$output:out "/share/fonts/opentype"))
                  (delete-file-recursively
                   (string-append #$output:out "/share/texmf-dist"))))
-             (add-after 'font 'book-weight-only
+             (add-after 'move-fonts 'remove-regular-weight
                (lambda _
                  (for-each delete-file
                            (find-files #$output:out "(-Regular|-Italic)")))))))))))))
