@@ -22,7 +22,7 @@
      "parted"
      "perl" ; Magit expects Perl to be installed for some operations.
      "scrot"
-     "texlive"
+     "texlive-optex"
      "unzip"))
   (packages->manifest
    (list
