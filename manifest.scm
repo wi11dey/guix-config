@@ -63,30 +63,23 @@
   (packages->manifest
    (list
     (emacs->emacs-next emacs-xwidgets)
-    (package
-      (inherit font-latin-modern)
-      (name (string-append (package-name font-latin-modern) "-ttf"))
-      (native-inputs
-       (list
-        fontforge
-        ttfautohint))
-      (arguments
-       (list
-        #:phases
-        #~(modify-phases %standard-phases
-            ;; Steps from https://tex.stackexchange.com/a/201798:
-            (add-before 'install 'ttfautohint
-              (lambda _
-                (for-each (lambda (otf)
-                            (let* ((base (string-drop-right otf (string-length ".otf")))
-                                   (unhinted (string-append base "-unhinted.ttf"))
-                                   (ttf (string-append base ".ttf")))
-                              (invoke #+(file-append fontforge "/bin/fontforge")
-                                      "-lang=ff"
-                                      "-c" "Open($1); Generate($2)"
-                                      otf unhinted)
-                              (delete-file otf)
-                              (invoke #+(file-append ttfautohint "/bin/ttfautohint")
-                                      unhinted ttf)
-                              (delete-file unhinted)))
-                          (find-files "." "\\.otf$"))))))))))))
+    (autohint font-latin-modern)
+    (autohint
+     (package
+       (inherit texlive-newcomputermodern)
+       (name "font-newcomputermodern")
+       (arguments
+        (list
+         #:phases
+         #~(modify-phases %standard-phases
+             (add-after 'link-scripts 'font
+               (lambda _
+                 (copy-recursively
+                  (string-append #$output:out "/share/texmf-dist/fonts/opentype/public/newcomputermodern")
+                  (string-append #$output:out "/share/fonts/opentype"))
+                 (delete-file-recursively
+                  (string-append #$output:out "/share/texmf-dist"))))
+             (add-after 'font 'book-weight-only
+               (lambda _
+                 (for-each delete-file
+                           (find-files #$output:out "(-Regular|-Italic)")))))))))))))
