@@ -81,4 +81,4 @@
              (add-after 'move-fonts 'remove-regular-weight
                (lambda _
                  (for-each delete-file
-                           (find-files #$output:out "(-Regular|-Italic)")))))))))))))
+                           (find-files #$output:out "NewCM(Math|(|Sans|Uncial)[0-9]{2})(-Regular|-Italic)")))))))))))))
