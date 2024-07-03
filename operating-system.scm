@@ -13,6 +13,7 @@
 	     ;; (gnu packages android)
 	     (gnu services xorg)
 	     (gnu packages disk)
+	     (gnu packages linux)
 	     (gnu system setuid)
 	     (guix utils)
 	     (guix gexp)
@@ -98,6 +99,7 @@
 		   (system? #t))
 		  %base-groups))
    (packages (cons* wpa-supplicant-minimal
+		    btrfs-progs
 		    nss-certs
 		    %base-packages))
    (setuid-programs
