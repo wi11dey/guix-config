@@ -135,6 +135,8 @@ Section \"InputClass\"
   Option \"RightButtonAreaTop\" \"0\"
 EndSection
 "))))
+		    (simple-service 'btrfs-compress-store activation-service-type
+				    #~(system* #$(file-append btrfs-progs "/bin/btrfs") "property" "set" "/gnu/store" "compression" "zstd"))
 		    (simple-service 'suspend-permission activation-service-type
 				    #~(begin
 					(chown "/sys/power/state" 0 (group:gid (getgrnam "power")))
