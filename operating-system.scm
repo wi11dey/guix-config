@@ -107,7 +107,6 @@
 		  %base-groups))
    (packages (cons* wpa-supplicant-minimal
 		    btrfs-progs
-		    nss-certs
 		    %base-packages))
    (setuid-programs
     (cons* (setuid-program
@@ -169,7 +168,7 @@ EndSection
 									  "RUN+=\"" coreutils "/bin/chmod g+w       $sys$devpath/brightness\""))
 					#:groups '("backlight"))
 		    ;; (udev-rules-service 'android android-udev-rules
-                    ;;                     #:groups '("adbusers"))
+		    ;;                     #:groups '("adbusers"))
 		    (modify-services %base-services
 				     (mingetty-service-type
 				      config => (mingetty-configuration
