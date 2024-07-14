@@ -77,7 +77,11 @@
 			 (device (file-system-label "guix"))
 			 (mount-point "/")
 			 (type "btrfs"))
-			%base-file-systems))
+			(file-system
+			 (inherit %immutable-store)
+			 ;; Compress the store before it is bind-remounted read-only.
+			 (shepherd-requirements '(compressed-store)))
+			(delete %immutable-store %base-file-systems)))
    (swap-devices (list (swap-space
 			(target (file-system-label "swap")))))
    (users (cons* (user-account
@@ -140,6 +144,18 @@ EndSection
 "))))
 		    (simple-service 'btrfs-compress-store activation-service-type
 				    #~(system* #$(file-append btrfs-progs "/bin/btrfs") "property" "set" "/gnu/store" "compression" "zstd"))
+		    (simple-service 'compressed-store-shepherd-service shepherd-root-service-type
+				    (list
+				     (shepherd-service
+				      (documentation "Compress /gnu/store transparently with Btrfs.")
+				      (provision '(compressed-store))
+				      (requirement '(root-file-system))
+				      (one-shot? #t)
+				      (start #~(lambda ()
+						 (system* #$(file-append btrfs-progs "/bin/btrfs") "property" "set" "/gnu/store" "compression" "zstd"))))))
+		    (simple-service 'user-processes-compressed-store user-processes-service-type
+				    ;; Have 'user-processes' explicitly depend on 'file-system-/gnu-store' as file-system-/gnu-store has shepherd requirements of its own:
+				    '(file-system-/gnu/store))
 		    (simple-service 'suspend-permission activation-service-type
 				    #~(begin
 					(chown "/sys/power/state" 0 (group:gid (getgrnam "power")))
