@@ -1,9 +1,28 @@
 (use-modules (gnu packages emacs)
              (gnu packages fonts)
              (gnu packages fontutils)
+	     (gnu packages gtk)
              (gnu packages tex)
              (guix packages)
              (guix utils))
+
+(define gtk+-linuxfb
+  (package/inherit ((options->transformation
+		     '((with-git-url . "https://github.com/wi11dey/gtk.git")
+		       (with-branch . "gtk3-linuxfb")))
+		    gtk+)
+    (name "gtk+-linux-fb")
+    (version "3.24.44")
+    (description (string-append (package-description gtk+) "
+
+This fork adds a GDK Linux framebuffer backend."))))
+
+(define gtk+->gtk+-linuxfb
+  (package-input-rewriting
+   `((,gtk+ ,gtk+-linuxfb))
+   (cut string-append <> "-linuxfb")))
+
+(gtk+->gtk+-linuxfb emacs-next-pgtk-xwidgets)
 
 (define (autohint otf-font)
   (package
