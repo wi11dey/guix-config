@@ -2,20 +2,25 @@
              (gnu packages fonts)
              (gnu packages fontutils)
 	     (gnu packages gtk)
+	     (gnu packages gnome)
              (gnu packages tex)
              (guix packages)
              (guix utils))
 
 (define gtk+-linuxfb
-  (package/inherit ((options->transformation
-		     '((with-git-url . "https://github.com/wi11dey/gtk.git")
-		       (with-branch . "gtk3-linuxfb")))
-		    gtk+)
-    (name "gtk+-linux-fb")
+  (package/inherit gtk+
+    (source (git-checkout
+	     (url "https://github.com/wi11dey/gtk.git")
+	     (branch "gtk3-linuxfb")
+	     (recursive? #t)))
+    (name "gtk+-linuxfb")
     (version "3.24.44")
     (description (string-append (package-description gtk+) "
 
-This fork adds a GDK Linux framebuffer backend."))))
+This fork adds a GDK Linux framebuffer backend."))
+    (native-inputs (cons*
+		    vala
+		    (package-native-inputs gtk+)))))
 
 (define gtk+->gtk+-linuxfb
   (package-input-rewriting
