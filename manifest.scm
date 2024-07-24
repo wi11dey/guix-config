@@ -23,9 +23,8 @@
     (description (string-append (package-description gtk+) "
 
 This fork adds a GDK Linux framebuffer backend."))
-    (native-inputs (cons*
-		    vala
-		    (package-native-inputs gtk+)))))
+    (native-inputs (modify-inputs (package-native-inputs gtk+)
+		     (append vala)))))
 
 (define gtk+->gtk+-linuxfb
   (package-input-rewriting
