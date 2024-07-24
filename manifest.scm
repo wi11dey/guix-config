@@ -1,11 +1,16 @@
-(use-modules (gnu packages emacs)
-             (gnu packages fonts)
-             (gnu packages fontutils)
-	     (gnu packages gtk)
-	     (gnu packages gnome)
-             (gnu packages tex)
-             (guix packages)
-             (guix utils))
+(use-modules
+ (guix git)
+ (guix packages)
+ (guix packages)
+ (guix utils)
+ (gnu packages emacs)
+ (gnu packages fonts)
+ (gnu packages fontutils)
+ (gnu packages gnome)
+ (gnu packages gnome)
+ (gnu packages gtk)
+ (gnu packages gtk)
+ (gnu packages tex))
 
 (define gtk+-linuxfb
   (package/inherit gtk+
